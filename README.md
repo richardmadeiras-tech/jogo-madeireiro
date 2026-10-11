@@ -4,7 +4,7 @@ Jogo de celular de madeireiro: corte as árvores, carregue o caminhão, entregue
 
 ## Rodar no computador
 
-    node servir.js      # abre em http://localhost:8080
+    node servir.js      # abre em http://localhost:8080 (ou dê dois cliques em Jogar.bat)
     npm test            # testes da lógica
 
 ## Estrutura

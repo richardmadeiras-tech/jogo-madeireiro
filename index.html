@@ -36,6 +36,15 @@
     </div>
   </dialog>
 
+  <script>
+    if (location.protocol === 'file:') {
+      document.addEventListener('DOMContentLoaded', function () {
+        var a = document.getElementById('aviso');
+        a.textContent = 'O jogo não roda abrindo o arquivo direto. Use o link https://richardmadeiras-tech.github.io/jogo-madeireiro/ ou dê dois cliques em Jogar.bat.';
+        a.hidden = false;
+      });
+    }
+  </script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
