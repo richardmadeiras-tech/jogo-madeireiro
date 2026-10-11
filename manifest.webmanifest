@@ -1,0 +1,9 @@
+{
+  "name": "Jogo Madeireiro",
+  "short_name": "Madeireiro",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f1e8",
+  "theme_color": "#2e7d32",
+  "icons": [{ "src": "icone.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
