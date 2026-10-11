@@ -124,3 +124,23 @@ export function comprar(e, id) {
   if (id === 'caminhoes') sincronizarCaminhoes(e);
   return true;
 }
+
+export function ganhoOffline(e, segundos) {
+  if (!Number.isFinite(segundos) || segundos < C.OFFLINE_MINIMO_S) {
+    return { segundos: 0, dinheiro: 0 };
+  }
+  const s = Math.min(segundos, C.LIMITE_OFFLINE_S);
+  const esp = C.ESPECIES[e.especie];
+  const torasPorSegundoCorte = (danoAjudantes(e) / esp.vida) * esp.toras;
+  const cap = capacidadeCaminhao(e);
+  const ciclo = tempoViagem(e) + cap / C.CARGA_POR_S;
+  const torasPorSegundoCaminhao = (quantidadeCaminhoes(e) * cap) / ciclo;
+  const taxa = Math.min(torasPorSegundoCorte, torasPorSegundoCaminhao);
+  return { segundos: s, dinheiro: Math.floor(taxa * esp.preco * s + 1e-9) };
+}
+
+export function aplicarOffline(e, segundos) {
+  const r = ganhoOffline(e, segundos);
+  e.dinheiro += r.dinheiro;
+  return r;
+}
