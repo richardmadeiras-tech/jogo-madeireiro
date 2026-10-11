@@ -14,7 +14,13 @@ const tipos = {
 const porta = Number(process.env.PORT) || 8080;
 
 createServer(async (req, res) => {
-  const caminho = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+  let caminho;
+  try {
+    caminho = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+  } catch {
+    res.writeHead(400).end('requisição inválida');
+    return;
+  }
   const arquivo = normalize(join(raiz, caminho === '/' ? 'index.html' : caminho));
   if (!arquivo.startsWith(raiz)) {
     res.writeHead(403).end();

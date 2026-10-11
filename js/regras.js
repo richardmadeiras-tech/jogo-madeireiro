@@ -56,7 +56,7 @@ export function cortar(e, dano) {
 }
 
 export function trocarEspecie(e, id) {
-  if (!C.ESPECIES[id] || id === e.especie || !especieDesbloqueada(e, id)) return false;
+  if (!Object.hasOwn(C.ESPECIES, id) || id === e.especie || !especieDesbloqueada(e, id)) return false;
   e.especie = id;
   e.arvore.vida = C.ESPECIES[id].vida;
   return true;
@@ -116,7 +116,7 @@ export function avancar(e, dt) {
 }
 
 export function comprar(e, id) {
-  if (!C.MELHORIAS[id]) return false;
+  if (!Object.hasOwn(C.MELHORIAS, id)) return false;
   const custo = custoProximo(e, id);
   if (custo === null || e.dinheiro < custo) return false;
   e.dinheiro -= custo;

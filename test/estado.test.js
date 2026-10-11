@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { novoEstado, novoCaminhao, nivelMaximo } from '../js/estado.js';
-import { ESPECIES, ORDEM_ESPECIES, ORDEM_MELHORIAS, MELHORIAS } from '../js/config.js';
+import { ESPECIES, ORDEM_ESPECIES, ORDEM_MELHORIAS, MELHORIAS, DANO_FERRAMENTA, FERRAMENTAS } from '../js/config.js';
 
 test('estado novo começa zerado, com um caminhão e árvore de tauari inteira', () => {
   const e = novoEstado();
@@ -39,4 +39,9 @@ test('espécies: preço e ferramenta mínima crescem na ordem de progressão', (
     assert.ok(depois.ferramentaMin > antes.ferramentaMin);
   }
   assert.ok(MELHORIAS.ferramenta.custos.length >= ESPECIES.ipe.ferramentaMin);
+});
+
+test('tabelas de ferramenta têm tamanhos coerentes', () => {
+  assert.equal(DANO_FERRAMENTA.length, MELHORIAS.ferramenta.custos.length + 1);
+  assert.equal(FERRAMENTAS.length, DANO_FERRAMENTA.length);
 });

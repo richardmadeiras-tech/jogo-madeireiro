@@ -36,7 +36,7 @@ export function sanear(obj) {
     e.niveis[id] = Math.min(Math.floor(numero(niveis[id])), nivelMaximo(id));
   }
 
-  e.especie = ESPECIES[obj.especie] && especieDesbloqueada(e, obj.especie) ? obj.especie : 'tauari';
+  e.especie = typeof obj.especie === 'string' && Object.hasOwn(ESPECIES, obj.especie) && especieDesbloqueada(e, obj.especie) ? obj.especie : 'tauari';
   const vidaMax = ESPECIES[e.especie].vida;
   const vida = obj.arvore && obj.arvore.vida;
   e.arvore.vida = Number.isFinite(vida) && vida > 0 ? Math.min(vida, vidaMax) : vidaMax;

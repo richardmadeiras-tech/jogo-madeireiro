@@ -18,11 +18,12 @@ test('cortar: a árvore só cai quando a vida zera, e vira toras no pátio', () 
 
 test('cortar com o pátio cheio não faz nada e não perde a árvore', () => {
   const e = novoEstado();
-  e.patio.toras = 10;
+  e.patio = { toras: 10, valor: 80 };
   e.arvore.vida = 5;
   assert.equal(R.cortar(e, 3), false);
   assert.equal(e.arvore.vida, 5);
   assert.equal(e.patio.toras, 10);
+  assert.equal(e.patio.valor, 80);
 });
 
 test('cortar ignora dano zero, negativo ou inválido', () => {
@@ -118,4 +119,14 @@ test('comprar desconta o custo e sobe o nível; comprar caminhão cria o caminh�
   assert.equal(R.comprar(e, 'caminhoes'), true);
   assert.equal(e.dinheiro, 50);
   assert.equal(e.caminhoes.length, 2);
+});
+
+test('ids com chaves de protótipo são recusados', () => {
+  const e = novoEstado();
+  const antes = JSON.stringify(e);
+  assert.equal(R.trocarEspecie(e, 'constructor'), false);
+  assert.equal(R.trocarEspecie(e, 'toString'), false);
+  assert.equal(R.comprar(e, 'constructor'), false);
+  assert.equal(R.comprar(e, '__proto__'), false);
+  assert.equal(JSON.stringify(e), antes);
 });

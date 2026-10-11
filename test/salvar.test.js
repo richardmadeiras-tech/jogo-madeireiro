@@ -130,3 +130,18 @@ test('armazenamentoSeguro cai para memória quando o localStorage falha', () => 
   const bom = armazenamentoFalso();
   assert.equal(armazenamentoSeguro(() => bom), bom);
 });
+
+test('sanear: especie precisa ser uma chave de texto real', () => {
+  for (const especie of [['ipe'], 'constructor']) {
+    assert.equal(sanear({ versao: 1, especie, niveis: { ferramenta: 2 } }).especie, 'tauari');
+  }
+});
+
+test('carregarLocal: versão futura e formato de lista viram corrompido com backup', () => {
+  for (const texto of [JSON.stringify({ versao: 99 }), '[]']) {
+    const s = armazenamentoFalso();
+    s.setItem(CHAVE_SAVE, texto);
+    assert.equal(carregarLocal(s).origem, 'corrompido');
+    assert.equal(s.getItem(CHAVE_BACKUP), texto);
+  }
+});

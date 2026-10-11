@@ -10,6 +10,7 @@ test('formata reais com ponto de milhar e sem centavos', () => {
 
 test('abrevia milhões', () => {
   assert.equal(formatarReais(1500000), 'R$ 1,5 mi');
+  assert.equal(formatarReais(1999999), 'R$ 1,9 mi');
 });
 
 test('valores inválidos viram zero', () => {

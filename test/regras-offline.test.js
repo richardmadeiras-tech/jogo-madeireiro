@@ -46,3 +46,10 @@ test('aplicarOffline soma ao dinheiro e devolve o resumo', () => {
   assert.equal(r.dinheiro, 160);
   assert.equal(e.dinheiro, 170);
 });
+
+test('limite do mínimo: 9,99 s não rende; 10 s exatos rendem', () => {
+  const e = novoEstado();
+  e.niveis.ajudantes = 2;
+  assert.deepEqual(ganhoOffline(e, 9.99), { segundos: 0, dinheiro: 0 });
+  assert.deepEqual(ganhoOffline(e, 10), { segundos: 10, dinheiro: 16 });
+});
