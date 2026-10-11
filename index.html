@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#2e7d32">
+  <title>Jogo Madeireiro</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icone.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <main id="jogo">
+    <header class="hud">
+      <div id="dinheiro" class="dinheiro">R$ 0</div>
+      <div id="info-patio" class="info">Pátio 0/10</div>
+    </header>
+    <div id="aviso" class="aviso" hidden></div>
+    <div id="especies" class="especies"></div>
+    <svg id="cena" class="cena" role="img" aria-label="Floresta, estrada e serraria"></svg>
+    <button id="btn-carga" class="botao-carga" type="button">Ajudar a carregar o caminhão</button>
+    <section id="loja" class="loja" aria-label="Melhorias"></section>
+    <footer class="rodape">
+      <button id="btn-exportar" type="button">Exportar save</button>
+      <button id="btn-importar" type="button">Importar save</button>
+    </footer>
+  </main>
+
+  <dialog id="dialogo">
+    <p id="dialogo-titulo"></p>
+    <textarea id="dialogo-texto" rows="6" spellcheck="false"></textarea>
+    <p id="dialogo-erro" class="erro" hidden></p>
+    <div class="dialogo-botoes">
+      <button id="dialogo-ok" type="button"></button>
+      <button id="dialogo-fechar" type="button">Fechar</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
