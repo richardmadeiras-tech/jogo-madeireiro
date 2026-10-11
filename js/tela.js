@@ -19,6 +19,15 @@ function descricao(e, id) {
   }
 }
 
+function dicaAtual(e) {
+  const viajando = e.caminhoes.some((c) => c.viajando);
+  const carregando = e.caminhoes.some((c) => !c.viajando && c.carga.toras > 0);
+  if (e.niveis.ajudantes === 0 && e.dinheiro >= 50) return '💰 Você já pode comprar um ajudante (R$ 50): ele corta sozinho!';
+  if (e.patio.toras >= 1 || carregando) return '🚚 Aperte "Ajudar a carregar o caminhão" para levar as toras.';
+  if (viajando) return '🚚 O caminhão está levando as toras para a serraria...';
+  return '👆 Toque na árvore para cortar. A barra vermelha mostra a vida dela.';
+}
+
 export function criarTela(jogo) {
   const e = jogo.estado;
   const refs = montarCena($('cena'));
@@ -166,6 +175,8 @@ export function criarTela(jogo) {
       itens[id].botao.textContent = custo === null ? 'Máximo' : `Comprar ${formatarReais(custo)}`;
       itens[id].botao.disabled = custo === null || e.dinheiro < custo;
     }
+
+    $('dica').textContent = dicaAtual(e);
 
     const esp = ESPECIES[e.especie];
     const tempoViagem = R.tempoViagem(e);

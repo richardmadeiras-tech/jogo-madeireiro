@@ -50,13 +50,16 @@ export function montarCena(svg) {
   el('rect', { x: -7, y: -50, width: 14, height: 50, fill: '#6d4c41' }, arvore);
   const copa = el('circle', { cx: 0, cy: -62, r: 32, fill: COPA.tauari }, arvore);
   el('rect', { x: -45, y: -100, width: 90, height: 110, fill: 'transparent' }, arvore);
+  el('rect', { x: -30, y: -122, width: 60, height: 7, rx: 3.5, fill: 'rgba(0,0,0,0.25)' }, posicao);
+  const barra = el('rect', { x: -30, y: -122, width: 60, height: 7, rx: 3.5, fill: '#e53935' }, posicao);
 
   const caminhoes = FAIXAS_Y.map(() => desenharCaminhao(svg));
-  return { arvore, copa, toras, caminhoes };
+  return { arvore, copa, barra, toras, caminhoes };
 }
 
 export function atualizarCena(refs, d) {
   const escala = 0.55 + 0.45 * d.vidaFrac;
+  refs.barra.setAttribute('width', String(60 * d.vidaFrac));
   refs.copa.setAttribute('r', String(32 * escala));
   refs.copa.setAttribute('cy', String(-30 - 32 * escala));
   refs.copa.setAttribute('fill', COPA[d.especie]);

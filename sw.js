@@ -1,4 +1,4 @@
-const VERSAO = 'jogo-madeireiro-v2';
+const VERSAO = 'jogo-madeireiro-v3';
 const ARQUIVOS = [
   './',
   'index.html',
