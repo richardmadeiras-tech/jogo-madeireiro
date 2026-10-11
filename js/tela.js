@@ -92,6 +92,7 @@ export function criarTela(jogo) {
   $('dialogo-fechar').addEventListener('click', () => dialogo.close());
   $('dialogo-ok').addEventListener('click', () => {
     const erro = aoConfirmar($('dialogo-texto').value);
+    if (erro === 'manter') return;
     if (erro) {
       $('dialogo-erro').textContent = erro;
       $('dialogo-erro').hidden = false;
@@ -105,8 +106,19 @@ export function criarTela(jogo) {
     somenteLeitura: true,
     rotuloOk: 'Copiar',
     confirmar: (texto) => {
-      navigator.clipboard?.writeText(texto).catch(() => {});
-      return null;
+      const falha = () => {
+        $('dialogo-erro').textContent = 'Não consegui copiar. Selecione o texto e copie manualmente.';
+        $('dialogo-erro').hidden = false;
+      };
+      if (!navigator.clipboard?.writeText) {
+        falha();
+        return 'manter';
+      }
+      navigator.clipboard.writeText(texto).then(() => {
+        mostrarAviso('Copiado!', 2000);
+        dialogo.close();
+      }, falha);
+      return 'manter';
     },
   }));
   $('btn-importar').addEventListener('click', () => abrirDialogo({

@@ -6,7 +6,7 @@
   --fundo: #f4f1e8;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; background: var(--fundo); color: var(--texto); font-family: system-ui, sans-serif; }
+html, body { touch-action: manipulation; margin: 0; background: var(--fundo); color: var(--texto); font-family: system-ui, sans-serif; }
 body { padding: env(safe-area-inset-top) 16px calc(24px + env(safe-area-inset-bottom)); -webkit-user-select: none; user-select: none; }
 #jogo { max-width: 460px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
 button { font: inherit; touch-action: manipulation; }
@@ -16,7 +16,8 @@ button { font: inherit; touch-action: manipulation; }
 .info { font-size: 0.95rem; }
 .info.cheio { color: #b71c1c; font-weight: 700; }
 
-.aviso { background: var(--amarelo); border-radius: 10px; padding: 10px 12px; font-weight: 600; }
+.aviso { position: fixed; top: calc(env(safe-area-inset-top) + 8px); left: 16px; right: 16px; max-width: 428px; margin: 0 auto; z-index: 10; pointer-events: none; background: var(--amarelo); border-radius: 10px; padding: 10px 12px; font-weight: 600; }
+.aviso[hidden] { display: none; }
 
 .especies { display: flex; gap: 6px; }
 .especies button { flex: 1; padding: 8px 4px; border: 2px solid #bcd7bd; border-radius: 10px; background: #fff; font-size: 0.8rem; line-height: 1.25; }
@@ -42,7 +43,7 @@ button { font: inherit; touch-action: manipulation; }
 .rodape button { flex: 1; padding: 10px; border: 1px solid #bbb; border-radius: 10px; background: transparent; }
 
 dialog { border: 0; border-radius: 14px; padding: 16px; width: min(92vw, 420px); }
-dialog textarea { width: 100%; font-family: monospace; font-size: 0.75rem; user-select: text; -webkit-user-select: text; }
+dialog textarea { width: 100%; font-family: monospace; font-size: 1rem; user-select: text; -webkit-user-select: text; }
 .dialogo-botoes { display: flex; gap: 8px; margin-top: 10px; }
 .dialogo-botoes button { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid #bbb; background: #fff; }
 .erro { color: #b71c1c; font-weight: 600; }

@@ -10,7 +10,7 @@ test('cortar: a árvore só cai quando a vida zera, e vira toras no pátio', () 
   assert.equal(R.cortar(e, 4), false);
   assert.equal(R.cortar(e, 4), false);
   assert.equal(e.patio.toras, 0);
-  assert.equal(R.cortar(e, 4), true);
+  assert.equal(R.cortar(e, 2), true);
   assert.equal(e.patio.toras, 2);
   assert.equal(e.patio.valor, 16);
   assert.equal(e.arvore.vida, 10);
@@ -129,4 +129,33 @@ test('ids com chaves de protótipo são recusados', () => {
   assert.equal(R.comprar(e, 'constructor'), false);
   assert.equal(R.comprar(e, '__proto__'), false);
   assert.equal(JSON.stringify(e), antes);
+});
+
+test('cortar: dano sobrando passa para a próxima árvore', () => {
+  const e = novoEstado();
+  e.especie = 'tauari';
+  e.arvore.vida = 10;
+  assert.equal(R.cortar(e, 25), true);
+  assert.equal(e.patio.toras, 4);
+  assert.equal(e.patio.valor, 32);
+  assert.ok(perto(e.arvore.vida, 5));
+});
+
+test('cortar: dano enorme para quando o pátio enche, sem NaN', () => {
+  const e = novoEstado();
+  assert.equal(R.cortar(e, 1e9), true);
+  assert.ok(e.patio.toras >= 10);
+  assert.ok(Number.isFinite(e.patio.toras) && Number.isFinite(e.patio.valor) && Number.isFinite(e.arvore.vida));
+});
+
+test('avancar: dois caminhões entregam e pagam tudo', () => {
+  const e = novoEstado();
+  e.niveis.caminhoes = 1;
+  R.sincronizarCaminhoes(e);
+  e.patio = { toras: 12, valor: 96 };
+  for (let i = 0; i < 4; i++) R.avancar(e, 0.5);
+  assert.ok(e.caminhoes.every((c) => c.viajando));
+  for (let i = 0; i < 24; i++) R.avancar(e, 0.5);
+  assert.ok(e.caminhoes.every((c) => !c.viajando));
+  assert.ok(perto(e.dinheiro, 96));
 });

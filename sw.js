@@ -1,4 +1,4 @@
-const VERSAO = 'jogo-madeireiro-v1';
+const VERSAO = 'jogo-madeireiro-v2';
 const ARQUIVOS = [
   './',
   'index.html',
@@ -17,7 +17,7 @@ const ARQUIVOS = [
 ];
 
 self.addEventListener('install', (ev) => {
-  ev.waitUntil(caches.open(VERSAO).then((c) => c.addAll(ARQUIVOS)).then(() => self.skipWaiting()));
+  ev.waitUntil(caches.open(VERSAO).then((c) => c.addAll(ARQUIVOS.map((u) => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (ev) => {
@@ -30,5 +30,5 @@ self.addEventListener('activate', (ev) => {
 
 self.addEventListener('fetch', (ev) => {
   if (ev.request.method !== 'GET') return;
-  ev.respondWith(caches.match(ev.request).then((achado) => achado || fetch(ev.request)));
+  ev.respondWith(caches.match(ev.request, { ignoreSearch: true }).then((achado) => achado || fetch(ev.request)));
 });

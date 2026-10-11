@@ -47,12 +47,20 @@ export function patioCheio(e) {
 export function cortar(e, dano) {
   if (!(dano > 0) || !Number.isFinite(dano) || patioCheio(e)) return false;
   const esp = C.ESPECIES[e.especie];
-  e.arvore.vida -= dano;
-  if (e.arvore.vida > 0) return false;
-  e.patio.toras += esp.toras;
-  e.patio.valor += esp.toras * esp.preco;
-  e.arvore.vida = esp.vida;
-  return true;
+  let resto = dano;
+  let caiu = false;
+  while (resto > 0 && !patioCheio(e)) {
+    if (e.arvore.vida > resto) {
+      e.arvore.vida -= resto;
+      break;
+    }
+    resto -= e.arvore.vida;
+    e.patio.toras += esp.toras;
+    e.patio.valor += esp.toras * esp.preco;
+    e.arvore.vida = esp.vida;
+    caiu = true;
+  }
+  return caiu;
 }
 
 export function trocarEspecie(e, id) {

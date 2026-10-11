@@ -145,3 +145,11 @@ test('carregarLocal: versão futura e formato de lista viram corrompido com back
     assert.equal(s.getItem(CHAVE_BACKUP), texto);
   }
 });
+
+test('ida e volta preserva caminhão em viagem', () => {
+  const e = novoEstado();
+  e.caminhoes[0] = { carga: { toras: 6, valor: 48 }, viajando: true, tempo: 5 };
+  const r = desserializar(serializar(e, 5000));
+  assert.equal(r.ok, true);
+  assert.deepEqual(r.estado.caminhoes[0], { carga: { toras: 6, valor: 48 }, viajando: true, tempo: 5 });
+});
